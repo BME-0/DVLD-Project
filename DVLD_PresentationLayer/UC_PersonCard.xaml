@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DVLD_PresentationLayer.CtrlPersonCard"
+﻿<UserControl x:Class="DVLD_PresentationLayer.UC_PersonCard"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,19 +6,20 @@
              xmlns:local="clr-namespace:DVLD_PresentationLayer"
              mc:Ignorable="d" 
              d:DesignHeight="270" d:DesignWidth="850"
-             MinWidth="750" MinHeight="250">
+             HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-    <Border Background="#F8FAFC" BorderBrush="#E2E8F0" BorderThickness="1.5" CornerRadius="12" Margin="5,5,-36,-19">
-        <Grid>
+    <!-- تم تصحيح الـ Margin السلبي ليكون متناسقاً من كل الجهات -->
+    <Border Background="#F8FAFC" BorderBrush="#E2E8F0" BorderThickness="1.5" CornerRadius="12" Margin="5">
+        <Grid Margin="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170" />
-                <!-- عمود الصورة والـ ID -->
+                <!-- العمود الأيسر للصورة والـ ID بأبعاد مرنة ومحددة بحد أقصى وأدنى -->
+                <ColumnDefinition Width="Auto" MinWidth="150" MaxWidth="200" />
+                <!-- عمود البيانات التفصيلية يأخذ باقي مساحة الكارت بالتساوي -->
                 <ColumnDefinition Width="*" />
-                <!-- عمود البيانات التفصيلية -->
             </Grid.ColumnDefinitions>
 
             <!-- ================= الجانب الأيسر: الهوية والصورة الشخصية ================= -->
-            <Border Grid.Column="0" Background="#EDF2F7" CornerRadius="11,0,0,11" Padding="10">
+            <Border Grid.Column="0" Background="#EDF2F7" CornerRadius="11" Padding="10" Margin="0,0,10,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -35,7 +36,7 @@
                     <!-- الصورة الشخصية بحواف دائرية -->
                     <Border Grid.Row="1" Width="95" Height="95" CornerRadius="47.5" BorderBrush="#CBD5E0" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Grid>
-                            <!-- هذا النص سيظهر فقط كرمز تعبيري (Emoji) كبير في الخلفية لو مفيش صورة -->
+                            <!-- الرمز التعبيري الخلفي -->
                             <TextBlock x:Name="txtGenderIcon" 
                                        Text="👤" 
                                        FontSize="48" 
@@ -43,7 +44,7 @@
                                        VerticalAlignment="Center" 
                                        Foreground="#A0AEC0"/>
 
-                            <!-- طبقة الصورة الفوقية (ستغطي الرمز التعبيري عند تحميل صورة حقيقية) -->
+                            <!-- طبقة الصورة الفوقية -->
                             <Border CornerRadius="47.5">
                                 <Border.Background>
                                     <ImageBrush x:Name="imgPerson" Stretch="UniformToFill"/>
@@ -52,107 +53,91 @@
                         </Grid>
                     </Border>
 
-                    <!-- الدولة والجنسية (اسم الدولة بدل الرقم) -->
+                    <!-- الدولة والجنسية -->
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
                         <TextBlock Text="🌐" FontSize="11" Margin="0,0,3,0" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="lblCountryName" Text="N/A" FontSize="11" FontWeight="Bold" Foreground="#4A5568" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="lblCountryName" Text="N/A" FontSize="11" FontWeight="Bold" Foreground="#4A5568" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
                 </Grid>
             </Border>
 
             <!-- ================= الجانب الأيمن: حقول البيانات بالتفصيل ================= -->
-            <Grid Grid.Column="1" Margin="15,10,15,10">
+            <Grid Grid.Column="1" Margin="5,0,5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <!-- شبكة التفاصيل المقسمة بالكامل -->
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" RenderTransformOrigin="0.5,0.5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <!-- صف الأسماء (الأول والثاني) -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- صف الأسماء (الثالث والأخير) -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- الرقم الوطني وتاريخ الميلاد -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- الهواتف -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- البريد الإلكتروني -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- العنوان -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- الصف الجديد (الأخير): الجنس -->
-                    </Grid.RowDefinitions>
+                <!-- الصف الأول: الاسم الأول والاسم الثاني -->
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,2">
+                    <TextBlock Text="👤 First Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblFirstName" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <!-- الصف الأول: الاسم الأول والاسم الثاني -->
-                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3">
-                        <TextBlock Text="👤 First Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblFirstName" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,2,0,2">
+                    <TextBlock Text="👤 Second Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblSecondName" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,3,0,3">
-                        <TextBlock Text="👤 Second Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblSecondName" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <!-- الصف الثاني: الاسم الثالث والاسم الأخير -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,2">
+                    <TextBlock Text="👤 Third Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblThirdName" Text="—" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <!-- الصف الثاني: الاسم الثالث والاسم الأخير -->
-                    <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3">
-                        <TextBlock Text="👤 Third Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblThirdName" Text="—" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,2,0,2">
+                    <TextBlock Text="👤 Last Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblLastName" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,3,0,3">
-                        <TextBlock Text="👤 Last Name" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblLastName" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <!-- الصف الثالث: الرقم الوطني وتاريخ الميلاد -->
+                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,2">
+                    <TextBlock Text="💳 National No" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblNationalNo" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <!-- الصف الثالث: الرقم الوطني وتاريخ الميلاد -->
-                    <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3">
-                        <TextBlock Text="💳 National No" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblNationalNo" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,2,0,2">
+                    <TextBlock Text="📅 Date Of Birth / Age" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblDateOfBirthAndAge" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,3,0,3">
-                        <TextBlock Text="📅 Date Of Birth / Age" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblDateOfBirthAndAge" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <!-- الصف الرابع: الهاتف الأول والهاتف الثاني -->
+                <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,2">
+                    <TextBlock Text="📞 Phone 1" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblPhone1" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <!-- الصف الرابع: الهاتف الأول والهاتف الثاني -->
-                    <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3">
-                        <TextBlock Text="📞 Phone 1" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblPhone1" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <StackPanel Grid.Row="3" Grid.Column="1" Margin="5,2,0,2">
+                    <TextBlock Text="📱 Phone 2" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblPhone2" Text="—" FontSize="12" Foreground="#718096" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,3,0,3">
-                        <TextBlock Text="📱 Phone 2" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblPhone2" Text="—" FontSize="12" Foreground="#718096" FontWeight="Medium" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <!-- الصف الخامس: البريد الإلكتروني -->
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2">
+                    <TextBlock Text="✉️ Email Address" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblEmail" Text="—" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <!-- الصف الخامس: البريد الإلكتروني -->
-                    <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,3">
-                        <TextBlock Text="✉️ Email Address" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblEmail" Text="—" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
+                <!-- الصف السادس: العنوان الكامل -->
+                <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2">
+                    <TextBlock Text="📍 Address" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblAddress" Text="N/A" FontSize="12" Foreground="#4A5568" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
 
-                    <!-- الصف السادس: العنوان الكامل -->
-                    <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,3">
-                        <TextBlock Text="📍 Address" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblAddress" Text="N/A" FontSize="12" Foreground="#4A5568" TextWrapping="Wrap" MaxHeight="35" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
-
-                    <!-- الصف السابع (الجديد بالكامل في النهاية): عرض نوع الجنس -->
-                    <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,3,0,0">
-                        <TextBlock Text="🚻 Gender" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold" Margin="0,0,0,1" RenderTransformOrigin="0.5,0.5"/>
-                        <TextBlock x:Name="lblGender" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
-                </Grid>
+                <!-- الصف السابع: الجنس -->
+                <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2">
+                    <TextBlock Text="🚻 Gender" FontSize="10" Foreground="#A0AEC0" FontWeight="Bold"/>
+                    <TextBlock x:Name="lblGender" Text="N/A" FontSize="12" Foreground="#2D3748" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>

@@ -23,7 +23,13 @@ namespace DVLD_PresentationLayer
         public MainWindow()
         {
             InitializeComponent();
-            Person1.LoadPersonInfo(53);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frm_AddEditPerson editPerson = new Frm_AddEditPerson(55);
+
+            editPerson.ShowDialog();
         }
     }
 }

@@ -6,5 +6,5 @@
         xmlns:local="clr-namespace:DVLD_PresentationLayer"
         mc:Ignorable="d"
         Title="MainWindow" Height="551" Width="912">
-    <local:UC_PersonCardAddEdit x:Name="Person1" HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
+    <Button Content="Button" HorizontalAlignment="Left" Height="130" Margin="379,171,0,0" VerticalAlignment="Top" Width="190" Click="Button_Click"/>
 </Window>

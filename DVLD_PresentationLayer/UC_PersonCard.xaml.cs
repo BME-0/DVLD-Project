@@ -8,24 +8,19 @@ using System.Windows.Media.Imaging;
 
 namespace DVLD_PresentationLayer
 {
-    public partial class CtrlPersonCard : UserControl
+    public partial class UC_PersonCard : UserControl
     {
         // تعريف الـ Modes الخاصة بالكنترول
-
-
-        public enum enMode { AddNew = 0, Update = 1 }
-        private enMode _Mode = enMode.AddNew;
 
         private ClsPerson _Person;
         private int _PersonID = -1;
 
-        public enMode Mode => _Mode;
         public int PersonID => _PersonID;
         public ClsPerson SelectedPersonInfo => _Person;
 
         // خصائص (Properties) لقراءة حالة الكنترول من الخارج
 
-        public CtrlPersonCard()
+        public UC_PersonCard()
         {
             InitializeComponent();
 
@@ -37,7 +32,7 @@ namespace DVLD_PresentationLayer
             //}
 
             //// الأكواد دي هتتنفذ فقط أثناء تشغيل البرنامج الفعلي (Runtime)
-            //ResetPersonInfo();
+            ResetPersonInfo();
         }
 
         // دالة جلب البيانات باستخدام الـ ID (تلقائياً تحول الـ Mode إلى Update)
