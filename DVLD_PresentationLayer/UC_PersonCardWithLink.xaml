@@ -1,0 +1,151 @@
+﻿<UserControl x:Class="DVLD_PresentationLayer.UC_PersonCardWithLink"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DVLD_PresentationLayer"
+             mc:Ignorable="d">
+
+    <!-- استخدام Grid مع تعريف صفين ليسمح بالتمدد مع حجم الشاشة/الفورم -->
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- هيدر الأزرار يتكيف مع محتواه -->
+            <RowDefinition Height="*"/>
+            <!-- الكارت يتمدد ليأخذ باقي المساحة المتاحة -->
+        </Grid.RowDefinitions>
+
+        <!-- شريط الهيدر العلوي بترويسة ممتازة لتوزيع الأزرار -->
+        <Border Grid.Row="0"
+                Background="#F1F5F9" 
+                CornerRadius="8,8,0,0" 
+                BorderBrush="#CBD5E1" 
+                BorderThickness="1,1,1,0" 
+                Padding="12,8"
+                Margin="0,0,0,-1"
+                HorizontalAlignment="Stretch">
+
+            <Grid x:Name="pnlHeader">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- 1. Send Email (أقصى اليسار) -->
+                <Button x:Name="btnSendEmail" 
+                        Grid.Column="0"
+                        HorizontalAlignment="Left" 
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="btnSendEmail_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" Padding="4,2" CornerRadius="4">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="H:\DVLD_Project\DVLD-Project\Icons\SendEmail.ico" Width="18" Height="18" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Send Email" 
+                                               FontSize="13" 
+                                               FontWeight="Bold" 
+                                               Foreground="#2A629A" 
+                                               VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                                        <Setter Property="Foreground" Value="#003366"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 2. Call Phone (في المنتصف) -->
+                <Button x:Name="btnCallPhone" 
+                        Grid.Column="1"
+                        HorizontalAlignment="Center" 
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="btnCallPhone_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" Padding="4,2" CornerRadius="4">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="H:\DVLD_Project\DVLD-Project\Icons\Call.ico" Width="18" Height="18" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Call Phone" 
+                                               FontSize="13" 
+                                               FontWeight="Bold" 
+                                               Foreground="#2A629A" 
+                                               VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                                        <Setter Property="Foreground" Value="#003366"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 3. Edit Person Info (أقصى اليمين) -->
+                <Button x:Name="btnEditPerson" 
+                        Grid.Column="2"
+                        HorizontalAlignment="Right" 
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="btnEditPerson_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" Padding="4,2" CornerRadius="4">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="H:\DVLD_Project\DVLD-Project\Icons\EditPerson.ico" Width="18" Height="18" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Edit Person Info" 
+                                               FontSize="13" 
+                                               FontWeight="Bold" 
+                                               Foreground="#2A629A" 
+                                               VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                                        <Setter Property="Foreground" Value="#003366"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </Grid>
+        </Border>
+
+        <!-- كارت بيانات الشخص المربوط تحت الشريط مباشرة ليأخذ التمدد المتاح -->
+        <local:UC_PersonCard Grid.Row="1" 
+                             x:Name="PersonCard" 
+                             Loaded="PersonCard_Loaded"
+                             HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch"/>
+
+    </Grid>
+</UserControl>

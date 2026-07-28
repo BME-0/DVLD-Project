@@ -23,7 +23,8 @@ CREATE TABLE People
 	Phone2 nvarchar(20) null,
     Email NVARCHAR(100) NULL,
     NationalityCountryID INT NOT NULL, -- —ﬁ„ «·œÊ·… «··Ì »Ì„À· Ã‰”Ì… «·‘Œ’
-    ImagePath NVARCHAR(250) NULL -- „”«— «·’Ê—… ⁄·Ï «·ÃÂ«“
+    ImagePath NVARCHAR(250) NULL, -- „”«— «·’Ê—… ⁄·Ï «·ÃÂ«“
+	Gender bit Not Null default 0 -- Male = 0, Female = 1
 
 	CONSTRAINT FK_People_Countries FOREIGN KEY (NationalityCountryID) REFERENCES Countries(CountryID)
 );

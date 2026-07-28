@@ -113,6 +113,12 @@ namespace DVLD_PresentationLayer
             if (rbMale != null) rbMale.IsChecked = true;
             if (txtNationalNo != null) txtNationalNo.IsEnabled = true;
 
+            // 1. تحديد آخر تاريخ مسموح باختياره (اليوم - 18 سنة)
+            dtpDateOfBirth.DisplayDateEnd = DateTime.Today.AddYears(-18);
+
+            // 2. تعيين القيمة الافتراضية للـ DatePicker لتكون تاريخ قبل 18 سنة
+            dtpDateOfBirth.SelectedDate = DateTime.Today.AddYears(-18);
+
             _SelectedImagePath = "";
             _LoadDefaultGenderIcon();
         }

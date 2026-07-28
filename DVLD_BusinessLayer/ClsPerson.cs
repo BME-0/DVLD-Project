@@ -273,6 +273,14 @@ namespace DVLD_BusinessLayer
             return ClsPersonDataAccess.GetAllPeopleWithCountryName(); // دي المفضلة للـ DataGridView 
         }
 
+        /// <summary>
+        /// جلب جميع الأشخاص مع تفاصيل الدولة والجنس المترجم
+        /// </summary>
+        public static DataTable GetAllPeopleWithDetails()
+        {
+            return ClsPersonDataAccess.GetAllPeopleWithDetails();
+        }
+
         public static bool IsPersonExistByID(int PersonID)
         {
             return ClsPersonDataAccess.IsPersonExistByID(PersonID);

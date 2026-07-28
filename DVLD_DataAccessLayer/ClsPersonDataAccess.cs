@@ -469,6 +469,57 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
+        private static DataTable _ExecuteGetAllPeopleWithDetails()
+        {
+            DataTable dt = new DataTable();
+
+            string query = @"SELECT 
+                        People.PersonID, 
+                        People.NationalNo, 
+                        People.FirstName, 
+                        People.SecondName, 
+                        ISNULL(People.ThirdName, '') AS ThirdName, 
+                        People.LastName, 
+                        CASE 
+                            WHEN People.Gendor = 0 THEN 'Male' 
+                            ELSE 'Female' 
+                        END AS GendorCaption,
+                        People.DateOfBirth, 
+                        Countries.CountryName_En AS CountryName, 
+                        People.Phone1, 
+                        ISNULL(People.Phone2, '') AS Phone2, 
+                        ISNULL(People.Email, '') AS Email, 
+                        People.NationalityCountryID, 
+                        People.Address, 
+                        ISNULL(People.ImagePath, '') AS ImagePath
+                     FROM People 
+                     INNER JOIN Countries ON People.NationalityCountryID = Countries.CountryID";
+
+            using (SqlConnection connection = new SqlConnection(ClsDataAccessSettings.ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                dt.Load(reader);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // يمكن إضافة تسجيل للخطأ هنا مستقبلاً (EventLog / Logger)
+                        dt = new DataTable();
+                    }
+                }
+            }
+
+            return dt;
+        }
         private static bool _ExecuteIsPersonExistByID(int PersonID)
         {
             bool isFound = false;
@@ -858,6 +909,11 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetAllPeopleWithCountryName()
         {
             return _ExecuteGetAllPeopleWithCountryName();
+        }
+
+        public static DataTable GetAllPeopleWithDetails()
+        {
+            return _ExecuteGetAllPeopleWithDetails();
         }
 
         public static bool IsPersonExistByID(int PersonID)
