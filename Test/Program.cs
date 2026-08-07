@@ -13,7 +13,10 @@ namespace Test
        
         static void Main(string[] args)
         {
-            ClsTestPerson.TestInvalidInputsAndExceptions_Isolated();
+            Console.WriteLine("HASH:");
+            Console.WriteLine(ClsEncryption.ComputeHash("123456789"));
+
+            //Console.WriteLine(ClsEncryption.HashPasswordWithSalt("123456789",out ));
         }
     }
 }

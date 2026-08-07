@@ -1,12 +1,18 @@
-﻿<Window x:Name="Frm_ManagePeople" x:Class="DVLD.ManagePeopleWindow"
+﻿<Window x:Class="DVLD_PresentationLayer.Frm_ManageUsers"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="People Directory" Height="880" Width="1300"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DVLD_PresentationLayer"
+        mc:Ignorable="d"
+        Title="Manage Users" Height="880" Width="1300"
         WindowStartupLocation="CenterScreen"
         Background="#F1F5F9"
-        Loaded="Window_Loaded" Icon="/ManagePeople.ico"
+        Loaded="Window_Loaded" 
+        Activated="Window_Activated"
         WindowState="Maximized"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Icon="H:\DVLD_Project\DVLD-Project\Icons\ManageUsers.ico">
 
     <Window.Resources>
         <!-- Style الأزرار الرئيسية (Blue Primary) -->
@@ -59,7 +65,7 @@
             </Setter>
         </Style>
 
-        <!-- Style أزرار العمليات السريعة داخل الجدول (Action Buttons) -->
+        <!-- Style أزرار العمليات السريعة داخل الجدول -->
         <Style x:Key="RowActionButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -145,12 +151,12 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Header Section -->
+            <!-- Header -->
             <RowDefinition Height="Auto"/>
             <!-- KPI Cards -->
-            <RowDefinition Height="71.997"/>
+            <RowDefinition Height="Auto"/>
             <!-- Filter & Search -->
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
             <!-- DataGrid -->
             <RowDefinition Height="Auto"/>
             <!-- Footer & Pagination -->
@@ -168,16 +174,16 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="👤" FontSize="26" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="🔐" FontSize="26" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="People Directory" FontSize="20" FontWeight="Bold" Foreground="#0F172A"/>
-                        <TextBlock Text="Manage, search and edit system users &amp; profiles" FontSize="12" Foreground="#64748B"/>
+                        <TextBlock Text="Users Directory" FontSize="20" FontWeight="Bold" Foreground="#0F172A"/>
+                        <TextBlock Text="Manage system users, login credentials, and account statuses" FontSize="12" Foreground="#64748B"/>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button x:Name="btnRefresh" Content="🔄 Refresh" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,10,0" Click="btnRefresh_Click"/>
-                    <Button x:Name="btnAddNewPerson" Content="➕ Add Person" Style="{StaticResource PrimaryButtonStyle}" Click="btnAddNewPerson_Click"/>
+                    <Button x:Name="btnAddNewUser" Content="➕ Add New User" Style="{StaticResource PrimaryButtonStyle}" Click="btnAddNewUser_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -191,52 +197,51 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Card 1: Total -->
+            <!-- Card 1: Total Users -->
             <Border Grid.Column="0" Background="White" CornerRadius="8" Padding="16" Margin="0,0,8,0">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="6" ShadowDepth="1" Opacity="0.04" Color="#000000"/>
                 </Border.Effect>
                 <StackPanel>
-                    <TextBlock Text="👥 Total People" FontSize="13" FontWeight="SemiBold" Foreground="#64748B"/>
-                    <TextBlock x:Name="lblTotalPeopleCard" Text="1,250" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
+                    <TextBlock Text="👥 Total Users" FontSize="13" FontWeight="SemiBold" Foreground="#64748B"/>
+                    <TextBlock x:Name="lblTotalUsersCard" Text="0" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
                 </StackPanel>
             </Border>
 
-            <!-- Card 2: Male -->
+            <!-- Card 2: Active Users -->
             <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="16" Margin="4,0,4,0">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="6" ShadowDepth="1" Opacity="0.04" Color="#000000"/>
                 </Border.Effect>
                 <StackPanel>
-                    <TextBlock Text="👨 Male" FontSize="13" FontWeight="SemiBold" Foreground="#2563EB"/>
-                    <TextBlock x:Name="lblMaleCard" Text="780" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
+                    <TextBlock Text="✅ Active Users" FontSize="13" FontWeight="SemiBold" Foreground="#10B981"/>
+                    <TextBlock x:Name="lblActiveUsersCard" Text="0" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
                 </StackPanel>
             </Border>
 
-            <!-- Card 3: Female -->
+            <!-- Card 3: Inactive Users -->
             <Border Grid.Column="2" Background="White" CornerRadius="8" Padding="16" Margin="4,0,4,0">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="6" ShadowDepth="1" Opacity="0.04" Color="#000000"/>
                 </Border.Effect>
                 <StackPanel>
-                    <TextBlock Text="👩 Female" FontSize="13" FontWeight="SemiBold" Foreground="#EC4899"/>
-                    <TextBlock x:Name="lblFemaleCard" Text="470" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
+                    <TextBlock Text="❌ Inactive Users" FontSize="13" FontWeight="SemiBold" Foreground="#EF4444"/>
+                    <TextBlock x:Name="lblInactiveUsersCard" Text="0" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
                 </StackPanel>
             </Border>
 
-            <!-- Card 4: Nationalities -->
+            <!-- Card 4: Added Today -->
             <Border Grid.Column="3" Background="White" CornerRadius="8" Padding="16" Margin="8,0,0,0">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="6" ShadowDepth="1" Opacity="0.04" Color="#000000"/>
                 </Border.Effect>
                 <StackPanel>
-                    <TextBlock Text="🌍 Countries" FontSize="13" FontWeight="SemiBold" Foreground="#10B981"/>
-                    <TextBlock x:Name="lblCountriesCard" Text="15" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
+                    <TextBlock Text="📅 Today's Users" FontSize="13" FontWeight="SemiBold" Foreground="#2563EB"/>
+                    <TextBlock x:Name="lblTodayUsersCard" Text="0" FontSize="24" FontWeight="Bold" Foreground="#0F172A" Margin="0,4,0,0"/>
                 </StackPanel>
             </Border>
         </Grid>
 
-        <!-- 3. Search & Filter Bar Section -->
         <!-- 3. Search & Filter Bar Section -->
         <Border Grid.Row="2" Background="White" CornerRadius="8" Padding="12" Margin="0,0,0,14">
             <Border.Effect>
@@ -252,40 +257,46 @@
                 <!-- Filter By Dropdown Section -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="4,0,16,0">
                     <TextBlock Text="Filter By:" FontSize="13" FontWeight="SemiBold" Foreground="#475569" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <ComboBox x:Name="cbFilterBy" Width="150" Height="34" VerticalContentAlignment="Center" 
+                    <ComboBox x:Name="cbFilterBy" Width="160" Height="34" VerticalContentAlignment="Center" 
                               SelectionChanged="cbFilterBy_SelectionChanged" Padding="8,0" Background="#F8FAFC">
                         <ComboBoxItem Content="None" IsSelected="True"/>
+                        <ComboBoxItem Content="User ID"/>
                         <ComboBoxItem Content="Person ID"/>
-                        <ComboBoxItem Content="National No"/>
-                        <ComboBoxItem Content="First Name"/>
-                        <ComboBoxItem Content="Second Name"/>
-                        <ComboBoxItem Content="Third Name"/>
-                        <ComboBoxItem Content="Last Name"/>
-                        <ComboBoxItem Content="Gender"/>
-                        <ComboBoxItem Content="Nationality"/>
-                        <ComboBoxItem Content="Phone 1"/>
-                        <ComboBoxItem Content="Email"/>
+                        <ComboBoxItem Content="Full Name"/>
+                        <ComboBoxItem Content="UserName"/>
+                        <ComboBoxItem Content="Is Active"/>
                     </ComboBox>
                 </StackPanel>
 
-                <!-- Big Search Box -->
+                <!-- Big Search Box & IsActive ComboBox -->
                 <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <!-- Standard TextBox for text search -->
                     <TextBox x:Name="txtFilterValue" Height="34" VerticalContentAlignment="Center" 
                              Padding="30,0,10,0" Background="#F8FAFC" BorderBrush="#CBD5E1" 
                              BorderThickness="1" TextChanged="txtFilterValue_TextChanged"
                              PreviewTextInput="txtFilterValue_PreviewTextInput"
                              PreviewKeyDown="txtFilterValue_PreviewKeyDown"/>
-                    <TextBlock Text="🔍" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="#94A3B8" IsHitTestVisible="False"/>
+                    <TextBlock x:Name="txtSearchIcon" Text="🔍" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" Foreground="#94A3B8" IsHitTestVisible="False"/>
+
+                    <!-- Dropdown ComboBox for Is Active filter (Hidden by default) -->
+                    <ComboBox x:Name="cbIsActiveValue" Height="34" VerticalContentAlignment="Center" 
+                              Background="#F8FAFC" BorderBrush="#CBD5E1" BorderThickness="1"
+                              Padding="8,0" Visibility="Collapsed" SelectionChanged="cbIsActiveValue_SelectionChanged">
+                        <ComboBoxItem Content="All" IsSelected="True"/>
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
                 </Grid>
             </Grid>
         </Border>
+
         <!-- 4. DataGrid Section -->
         <Border Grid.Row="3" Background="White" CornerRadius="8" ClipToBounds="True">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.04" Color="#000000"/>
             </Border.Effect>
 
-            <DataGrid x:Name="dgvPeople" AutoGenerateColumns="False" IsReadOnly="True" 
+            <DataGrid x:Name="dgvUsers" AutoGenerateColumns="False" IsReadOnly="True" 
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E2E8F0"
                       HeadersVisibility="Column" ColumnHeaderStyle="{StaticResource ModernColumnHeaderStyle}"
                       Background="Transparent" BorderThickness="0" SelectionMode="Single"
@@ -296,50 +307,56 @@
                     <ContextMenu FontSize="13">
                         <MenuItem Header="👁 Show Details" Click="cmShowDetails_Click"/>
                         <Separator/>
-                        <MenuItem Header="➕ Add New Person" Click="cmAddNewPerson_Click"/>
-                        <MenuItem Header="✏ Edit Person" Click="cmEditPerson_Click"/>
-                        <MenuItem Header="🗑 Delete Person" Click="cmDeletePerson_Click"/>
+                        <MenuItem Header="➕ Add New User" Click="cmAddNewUser_Click"/>
+                        <MenuItem Header="✏ Edit User" Click="cmEditUser_Click"/>
+                        <MenuItem Header="🗑 Delete User" Click="cmDeleteUser_Click"/>
                         <Separator/>
-                        <MenuItem Header="📧 Send Email" Click="cmSendEmail_Click"/>
-                        <MenuItem Header="📞 Phone Call" Click="cmPhoneCall_Click"/>
+                        <MenuItem Header="🔑 Change Password" Click="cmChangePassword_Click"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 
                 <DataGrid.Columns>
-                    <!-- 1. Photo Column -->
-                    <DataGridTemplateColumn Header="Photo" Width="60">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Ellipse Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding ImagePath}" Stretch="UniformToFill"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    <!-- User ID -->
+                    <DataGridTextColumn Header="User ID" Binding="{Binding UserID}" Width="100"/>
 
-                    <!-- البيانات الأساسية -->
-                    <DataGridTextColumn Header="Person ID" Binding="{Binding PersonID}" Width="85"/>
-                    <DataGridTextColumn Header="National No" Binding="{Binding NationalNo}" Width="100"/>
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="95"/>
-                    <DataGridTextColumn Header="Second Name" Binding="{Binding SecondName}" Width="95"/>
-                    <DataGridTextColumn Header="Third Name" Binding="{Binding ThirdName}" Width="95"/>
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="95"/>
-                    <DataGridTextColumn Header="Gender" Binding="{Binding GendorCaption}" Width="75"/>
-                    <DataGridTextColumn Header="Date Of Birth" Binding="{Binding DateOfBirth, StringFormat='{}{0:dd/MM/yyyy}'}" Width="100"/>
-                    <DataGridTextColumn Header="Nationality" Binding="{Binding CountryName}" Width="105"/>
-                    <DataGridTextColumn Header="Phone 1" Binding="{Binding Phone1}" Width="100"/>
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="130"/>
+                    <!-- Person ID -->
+                    <DataGridTextColumn Header="Person ID" Binding="{Binding PersonID}" Width="100"/>
 
-                    <!-- 2. Actions Column -->
-                    <DataGridTemplateColumn Header="Actions" Width="100">
+                    <!-- Full Name -->
+                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="250"/>
+
+                    <!-- UserName -->
+                    <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" Width="180"/>
+
+                    <!-- Is Active -->
+                    <DataGridTextColumn Header="Is Active" Binding="{Binding IsActive}" Width="100">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <!-- لو القيمة True (نشط) يصبح لون الخط أخضر غامق وعريض -->
+                                    <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                        <Setter Property="Foreground" Value="ForestGreen"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+
+                                    <!-- لو القيمة False (غير نشط) يصبح لون الخط أحمر -->
+                                    <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                        <Setter Property="Foreground" Value="Crimson"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Actions Column -->
+                    <DataGridTemplateColumn Header="Actions" Width="120">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Button Content="👁" Style="{StaticResource RowActionButtonStyle}" ToolTip="View Details" Click="cmShowDetails_Click"/>
-                                    <Button Content="✏" Style="{StaticResource RowActionButtonStyle}" ToolTip="Edit" Click="cmEditPerson_Click"/>
-                                    <Button Content="🗑" Style="{StaticResource RowActionButtonStyle}" ToolTip="Delete" Click="cmDeletePerson_Click"/>
+                                    <Button Content="✏" Style="{StaticResource RowActionButtonStyle}" ToolTip="Edit" Click="cmEditUser_Click"/>
+                                    <Button Content="🗑" Style="{StaticResource RowActionButtonStyle}" ToolTip="Delete" Click="cmDeleteUser_Click"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -348,7 +365,7 @@
             </DataGrid>
         </Border>
 
-        <!-- 5. Footer & Pagination Section (تعديل كامل) -->
+        <!-- 5. Footer & Pagination Section -->
         <Grid Grid.Row="4" Margin="0,14,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

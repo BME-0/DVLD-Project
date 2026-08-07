@@ -13,7 +13,8 @@
         TextOptions.TextRenderingMode="ClearType"
         WindowState="Maximized"
         ResizeMode="NoResize"
-        Icon="/MainWindow.ico"> 
+        Icon="/MainWindow.ico"
+        Activated="Window_Activated">
 
     <!-- ================================================================= -->
     <!-- 1. موارد النافذة (WINDOW RESOURCES) - تعريف الألوان والاستايلات   -->
@@ -194,12 +195,12 @@
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="10,15,10,10">
 
-                        <Button Content="🏠  Dashboard" Style="{StaticResource MenuButtonStyle}" Click="btnDashboard_Click"/>
+                        <Button Content="🏠   Dashboard" Style="{StaticResource MenuButtonStyle}" Click="btnDashboard_Click"/>
 
                         <Separator Background="#334155" Margin="5,10"/>
 
                         <!-- قائمة الطلبات والتراخيص القابلة للطي -->
-                        <Expander Style="{StaticResource SidebarExpanderStyle}" Header="📄  Applications">
+                        <Expander Style="{StaticResource SidebarExpanderStyle}" Header="📄   Applications">
                             <StackPanel Margin="15,5,0,5">
                                 <Button Content="• Local License" Style="{StaticResource MenuButtonStyle}" Click="btnLocalLicense_Click"/>
                                 <Button Content="• International License" Style="{StaticResource MenuButtonStyle}" Click="btnInternationalLicense_Click"/>
@@ -209,13 +210,13 @@
                             </StackPanel>
                         </Expander>
 
-                        <Button Content="👥  Manage People" Style="{StaticResource MenuButtonStyle}" Click="btnManagePeople_Click"/>
-                        <Button Content="🚘  Drivers" Style="{StaticResource MenuButtonStyle}" Click="btnDrivers_Click"/>
-                        <Button Content="🔐  Users" Style="{StaticResource MenuButtonStyle}" Click="btnUsers_Click"/>
+                        <Button Content="👥   Manage People" Style="{StaticResource MenuButtonStyle}" Click="btnManagePeople_Click"/>
+                        <Button Content="🚘   Drivers" Style="{StaticResource MenuButtonStyle}" Click="btnDrivers_Click"/>
+                        <Button Content="🔐   Users" Style="{StaticResource MenuButtonStyle}" Click="btnUsers_Click"/>
 
                         <Separator Background="#334155" Margin="5,10"/>
 
-                        <Expander Style="{StaticResource SidebarExpanderStyle}" Header="⚙️  Settings">
+                        <Expander Style="{StaticResource SidebarExpanderStyle}" Header="⚙️   Settings">
                             <StackPanel Margin="15,5,0,5">
                                 <Button Content="👤 User Info" Style="{StaticResource MenuButtonStyle}" Click="btnCurrentUserInfo_Click"/>
                                 <Button Content="🔑 Change Password" Style="{StaticResource MenuButtonStyle}" Click="btnChangePassword_Click"/>
@@ -225,7 +226,7 @@
                 </ScrollViewer>
 
                 <!-- ③ زر تسجيل الخروج السفلي -->
-                <Button Grid.Row="2" Content="🚪  Sign Out" Style="{StaticResource MenuButtonStyle}" 
+                <Button Grid.Row="2" Content="🚪   Sign Out" Style="{StaticResource MenuButtonStyle}" 
                         Background="#DC2626" Margin="10" Click="btnSignOut_Click"/>
             </Grid>
         </Border>
@@ -252,9 +253,10 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- تم إضافة x:Name لعرض اسم المستخدم المرحب به وتاريخ الدخول -->
                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock Text="👋 Welcome Back, Bassem" FontSize="16" FontWeight="Bold" Foreground="#0F172A"/>
-                        <TextBlock Text="Friday, July 24, 2026" FontSize="11" Foreground="#64748B" Margin="0,2,0,0"/>
+                        <TextBlock x:Name="txtWelcomeUser" Text="👋 Welcome Back, Bassem" FontSize="16" FontWeight="Bold" Foreground="#0F172A"/>
+                        <TextBlock x:Name="txtHeaderDate" Text="Friday, July 24, 2026" FontSize="11" Foreground="#64748B" Margin="0,2,0,0"/>
                     </StackPanel>
 
                     <Border Grid.Column="1" HorizontalAlignment="Center" Width="340" Height="38" 
@@ -277,12 +279,16 @@
                         </Button>
 
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Width="38" Height="38" CornerRadius="19" Background="#2563EB" Margin="0,0,10,0">
-                                <TextBlock Text="👤" Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <!-- تم إضافة x:Name للصورة والرمز التعبيري والأسماء لدعم الصورة واليوزر نيم -->
+                            <Border Width="38" Height="38" CornerRadius="19" Background="#2563EB" Margin="0,0,10,0" ClipToBounds="True">
+                                <Grid>
+                                    <TextBlock x:Name="txtUserEmoji" Text="👤" Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Image x:Name="imgUserAvatar" Stretch="UniformToFill"/>
+                                </Grid>
                             </Border>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Bassem Mossad" FontWeight="SemiBold" FontSize="13" Foreground="#0F172A"/>
-                                <TextBlock Text="System Admin" FontSize="11" Foreground="#64748B"/>
+                                <TextBlock x:Name="txtTopUserName" Text="Bassem Mossad" FontWeight="SemiBold" FontSize="13" Foreground="#0F172A"/>
+                                <TextBlock x:Name="txtTopUserRole" Text="System Admin" FontSize="11" Foreground="#64748B"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -295,7 +301,7 @@
                 <ContentControl x:Name="MainContentFrame" Visibility="Collapsed"/>
 
                 <!-- محتوى الـ DASHBOARD الرئيسي -->
-                <ScrollViewer x:Name="pnlDashboardContent" VerticalScrollBarVisibility="Auto" Padding="25">
+                <ScrollViewer x:Name="pnlDashboardContent" VerticalScrollBarVisibility="Auto" Padding="25" HorizontalAlignment="Center" Width="1050" Height="690" VerticalAlignment="Top">
                     <StackPanel>
 
                         <!-- كروت الإحصائيات الأربعة -->
@@ -318,8 +324,8 @@
                                 </Border.Effect>
                                 <StackPanel>
                                     <TextBlock Text="👥 People Registered" Foreground="#64748B" FontSize="13" FontWeight="SemiBold"/>
-                                    <TextBlock Text="850" FontSize="26" FontWeight="Bold" Foreground="#0F172A" Margin="0,8,0,4"/>
-                                    <TextBlock Text="▲ +3 Today" Foreground="#16A34A" FontSize="12" FontWeight="SemiBold"/>
+                                    <TextBlock Text="850" x:Name="lblTotalPeopleCard" FontSize="26" FontWeight="Bold" Foreground="#0F172A" Margin="0,8,0,4"/>
+                                    <TextBlock Text="▲ +3 Today" x:Name="lblTodayPeopleCard" Foreground="#16A34A" FontSize="12" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Border>
 
@@ -390,10 +396,10 @@
                                 <StackPanel>
                                     <TextBlock Text="Quick Actions" FontSize="16" FontWeight="Bold" Foreground="#0F172A" Margin="0,0,0,15"/>
                                     <UniformGrid Columns="2">
-                                        <Button Content="+ Person" Style="{StaticResource QuickActionButtonStyle}" Click="btnManagePeople_Click"/>
-                                        <Button Content="+ Driver" Style="{StaticResource QuickActionButtonStyle}" Click="btnDrivers_Click"/>
-                                        <Button Content="+ User" Style="{StaticResource QuickActionButtonStyle}" Click="btnUsers_Click"/>
-                                        <Button Content="+ License" Style="{StaticResource QuickActionButtonStyle}" Click="btnLocalLicense_Click"/>
+                                        <Button Content="+ People" Style="{StaticResource QuickActionButtonStyle}" Click="btnManagePeople_Click"/>
+                                        <Button Content="+ Drivers" Style="{StaticResource QuickActionButtonStyle}" Click="btnDrivers_Click"/>
+                                        <Button Content="+ Users" Style="{StaticResource QuickActionButtonStyle}" Click="btnUsers_Click"/>
+                                        <Button Content="+ Licenses" Style="{StaticResource QuickActionButtonStyle}" Click="btnLocalLicense_Click"/>
                                         <Button Content="+ Test" Style="{StaticResource QuickActionButtonStyle}" Click="btnRetakeTest_Click"/>
                                         <Button Content="+ Reports" Style="{StaticResource QuickActionButtonStyle}"/>
                                     </UniformGrid>
@@ -466,13 +472,15 @@
                         <Ellipse Width="8" Height="8" Fill="#22C55E" Margin="0,0,6,0"/>
                         <TextBlock Text="Connected to Database" Foreground="#94A3B8" FontSize="11" Margin="0,0,15,0"/>
                         <TextBlock Text="|" Foreground="#334155" FontSize="11" Margin="0,0,15,0"/>
-                        <TextBlock Text="Role: System Administrator" Foreground="#94A3B8" FontSize="11"/>
+                        <!-- تم إضافة x:Name لدور المستخدم في شريط الحالة -->
+                        <TextBlock x:Name="txtStatusRole" Text="Role: System Administrator" Foreground="#94A3B8" FontSize="11"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <TextBlock Text="Version 1.0.0" Foreground="#94A3B8" FontSize="11" Margin="0,0,15,0"/>
                         <TextBlock Text="|" Foreground="#334155" FontSize="11" Margin="0,0,15,0"/>
-                        <TextBlock Text="24 July 2026" Foreground="#94A3B8" FontSize="11"/>
+                        <!-- تم إضافة x:Name لتاريخ الدخول في شريط الحالة -->
+                        <TextBlock x:Name="txtStatusDate" Text="24 July 2026" Foreground="#94A3B8" FontSize="11"/>
                     </StackPanel>
                 </Grid>
             </Border>

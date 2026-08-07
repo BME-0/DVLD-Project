@@ -329,5 +329,16 @@ namespace DVLD_BusinessLayer
         {
             return ClsPersonDataAccess.SearchContains(ColumnName, Value);
         }
+
+        public static int GetTotalPeopleCount()
+        {
+            return ClsPersonDataAccess.GetTotalPeopleCount();
+        }
+
+        public static int GetPeopleCountToday()
+        {
+            return ClsPersonDataAccess.GetPeopleCountToday();
+        }
+
     }
 }

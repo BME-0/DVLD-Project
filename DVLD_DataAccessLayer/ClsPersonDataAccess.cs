@@ -822,6 +822,48 @@ namespace DVLD_DataAccessLayer
 
             return isLinked;
         }
+        private static object _ExecuteScalarQuery(string query)
+        {
+            using (SqlConnection connection = new SqlConnection(ClsDataAccessSettings.ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        return command.ExecuteScalar();
+                    }
+                    catch (Exception ex)
+                    {
+                        // يمكنك تسجيل الخطأ هنا إذا كان لديك نظام Log
+                        return null;
+                    }
+                }
+            }
+        }
+        private static int _GetTotalPeopleCount()
+        {
+            string query = "SELECT COUNT(*) FROM People";
+            object result = _ExecuteScalarQuery(query);
+
+            if (result != null && int.TryParse(result.ToString(), out int count))
+            {
+                return count;
+            }
+            return 0;
+        }
+        private static int _GetPeopleCountToday()
+        {
+            string query = "SELECT COUNT(*) FROM People WHERE CAST(CreationDate AS DATE) = CAST(GETDATE() AS DATE)";
+            object result = _ExecuteScalarQuery(query);
+
+            if (result != null && int.TryParse(result.ToString(), out int count))
+            {
+                return count;
+            }
+            return 0;
+        }
+
         // Public
 
         public static int AddNewPerson(
@@ -978,5 +1020,16 @@ namespace DVLD_DataAccessLayer
         {
             return _ExecuteIsPersonLinkedToDriver(PersonID);
         }
+
+        public static int GetTotalPeopleCount()
+        {
+            return _GetTotalPeopleCount();
+        }
+
+        public static int GetPeopleCountToday()
+        {
+            return _GetPeopleCountToday();
+        }
+
     }
 }

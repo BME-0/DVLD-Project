@@ -59,12 +59,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="clsGlobal.cs" />
     <Compile Include="ClsInputValidation.cs" />
+    <Compile Include="UC_ChangePassword.xaml.cs">
+      <DependentUpon>UC_ChangePassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC_ShowUserInfo.xaml.cs">
+      <DependentUpon>UC_ShowUserInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Frm_AddEditPerson.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Frm_AddEditPerson.Designer.cs">
       <DependentUpon>Frm_AddEditPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_ManageUsers.xaml.cs">
+      <DependentUpon>Frm_ManageUsers.xaml</DependentUpon>
     </Compile>
     <Compile Include="Frm_ShowPerson.cs">
       <SubType>Form</SubType>
@@ -79,15 +89,46 @@
     <Compile Include="Frm_ShowPersonWithLink.Designer.cs">
       <DependentUpon>Frm_ShowPersonWithLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagePeopleWindow.xaml.cs">
       <DependentUpon>ManagePeopleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UC_PersonCardAddEdit.xaml.cs">
       <DependentUpon>UC_PersonCardAddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC_PersonCardWithFilter.xaml.cs">
+      <DependentUpon>UC_PersonCardWithFilter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC_PersonCardWithLink.xaml.cs">
       <DependentUpon>UC_PersonCardWithLink.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC_ShowUserWithDetails.xaml.cs">
+      <DependentUpon>UC_ShowUserWithDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wpf_PersonWithCard.xaml.cs">
+      <DependentUpon>Wpf_PersonWithCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF_ShowUserWithDetails.xaml.cs">
+      <DependentUpon>WPF_ShowUserWithDetails.xaml</DependentUpon>
+    </Compile>
+    <Page Include="UC_ChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC_ShowUserInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frm_ManageUsers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ManagePeopleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,7 +156,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UC_PersonCardWithFilter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UC_PersonCardWithLink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC_ShowUserWithDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wpf_PersonWithCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF_ShowUserWithDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

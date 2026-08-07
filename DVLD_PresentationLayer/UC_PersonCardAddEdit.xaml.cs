@@ -1,4 +1,5 @@
-﻿using DVLD_BusinessLayer; // تأكد من استيراد كلاسات الـ Business والـ DataAccess
+﻿using DVLD.Classes;
+using DVLD_BusinessLayer; // تأكد من استيراد كلاسات الـ Business والـ DataAccess
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
