@@ -1,0 +1,21 @@
+﻿<Window x:Class="DVLD_ClientTier.frmDrivingLicenseApplicationInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DVLD_ClientTier"
+        mc:Ignorable="d"
+        Title="Driving License Application Info" Height="300" Width="680" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- استدعاء الـ User Control الذي قمنا برمجته -->
+        <local:ctrlDrivingLicenseApplicationInfo x:Name="ctrlDrivingLicenseApplicationInfo1" Grid.Row="0"/>
+
+        <!-- زر إغلاق النافذة -->
+        <Button x:Name="btnClose" Grid.Row="1" Content="Close" Width="90" Height="30" HorizontalAlignment="Right" Margin="0,10,10,0" Click="btnClose_Click"/>
+    </Grid>
+</Window>

@@ -24,7 +24,8 @@ CREATE TABLE People
     Email NVARCHAR(100) NULL,
     NationalityCountryID INT NOT NULL, -- —ﬁ„ «·œÊ·… «··Ì »Ì„À· Ã‰”Ì… «·‘Œ’
     ImagePath NVARCHAR(250) NULL, -- „”«— «·’Ê—… ⁄·Ï «·ÃÂ«“
-	Gender bit Not Null default 0 -- Male = 0, Female = 1
+	Gender bit Not Null default 0, -- Male = 0, Female = 1
+	CreationDate datetime default getdate(),
 
 	CONSTRAINT FK_People_Countries FOREIGN KEY (NationalityCountryID) REFERENCES Countries(CountryID)
 );
@@ -37,6 +38,7 @@ CREATE TABLE Users
     UserName NVARCHAR(50) NOT NULL UNIQUE,
     Password NVARCHAR(50) NOT NULL,
     IsActive BIT NOT NULL DEFAULT 1, -- 1 Ì⁄‰Ì ‘€«·° 0 Ì⁄‰Ì „Ã„œ
+	CreatedDate datetime default getdate(),
     CONSTRAINT FK_Users_People FOREIGN KEY (PersonID) REFERENCES People(PersonID)
 );
 

@@ -715,6 +715,21 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
+        private static int _ExcuteGetTodayUsersCount()
+        {
+            int count = 0;
+            string query = "SELECT COUNT(*) FROM Users WHERE CAST(CreatedDate AS DATE) = CAST(GETDATE() AS DATE)";
+
+            object result = ClsDataAccessSettings.ExecuteScalarQuery(query);
+
+            if (result != null && int.TryParse(result.ToString(), out int insertedCount))
+            {
+                count = insertedCount;
+            }
+
+            return count;
+        }
+
         // Public
 
         public static int AddNewUser(int PersonID, string UserName, string Password, bool IsActive)
@@ -816,6 +831,11 @@ namespace DVLD_DataAccessLayer
         public static int GetUsersCount()
         {
             return _ExecuteGetUsersCount();
+        }
+
+        public static int GetTodayUsersCount()
+        {
+            return _ExcuteGetTodayUsersCount();
         }
 
         public static DataTable GetUsersByStatus(bool IsActive)

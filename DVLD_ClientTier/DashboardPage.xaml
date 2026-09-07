@@ -1,0 +1,230 @@
+﻿<Page x:Class="DVLD_ClientTier.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="690" d:DesignWidth="1050"
+      Title="DashboardPage">
+
+    <Page.Resources>
+        <!-- استايل أزرار الإجراءات السريعة (Quick Actions Buttons) -->
+        <Style x:Key="QuickActionButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F1F5F9"/>
+            <Setter Property="Foreground" Value="#0F172A"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,8,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2563EB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- استايل هيدر أعمدة الـ DataGrid -->
+        <Style x:Key="ModernDataGridHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F8FAFC"/>
+            <Setter Property="Foreground" Value="#475569"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+        </Style>
+
+        <!-- استايل صفوف الـ DataGrid -->
+        <Style x:Key="ModernDataGridRow" TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F1F5F9"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#EFF6FF"/>
+                    <Setter Property="Foreground" Value="#1E40AF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="25" HorizontalAlignment="Center" Width="1050">
+        <StackPanel>
+
+            <!-- كروت الإحصائيات الأربعة -->
+            <UniformGrid Columns="4" Margin="0,0,0,25">
+
+                <Border Background="White" CornerRadius="12" Padding="18" Margin="0,0,10,0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="📄 Total Applications" Foreground="#64748B" FontSize="13" FontWeight="SemiBold"/>
+                        <TextBlock Text="1,240" FontSize="26" FontWeight="Bold" Foreground="#0F172A" Margin="0,8,0,4"/>
+                        <TextBlock Text="▲ +12 Today" Foreground="#16A34A" FontSize="12" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White" CornerRadius="12" Padding="18" Margin="5,0,5,0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="👥 People Registered" Foreground="#64748B" FontSize="13" FontWeight="SemiBold"/>
+                        <TextBlock Text="850" x:Name="lblTotalPeopleCard" FontSize="26" FontWeight="Bold" Foreground="#0F172A" Margin="0,8,0,4"/>
+                        <TextBlock Text="▲ +3 Today" x:Name="lblTodayPeopleCard" Foreground="#16A34A" FontSize="12" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White" CornerRadius="12" Padding="18" Margin="5,0,5,0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="🚘 Active Drivers" Foreground="#64748B" FontSize="13" FontWeight="SemiBold"/>
+                        <TextBlock Text="620" FontSize="26" FontWeight="Bold" Foreground="#0F172A" Margin="0,8,0,4"/>
+                        <TextBlock Text="▲ +5 Today" Foreground="#16A34A" FontSize="12" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White" CornerRadius="12" Padding="18" Margin="10,0,0,0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="🪪 Active Licenses" Foreground="#64748B" FontSize="13" FontWeight="SemiBold"/>
+                        <TextBlock Text="1,105" FontSize="26" FontWeight="Bold" Foreground="#0F172A" Margin="0,8,0,4"/>
+                        <TextBlock Text="⚠️ 14 Expired" Foreground="#DC2626" FontSize="12" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- قسم الجدول والإجراءات السريعة -->
+            <Grid Margin="0,0,0,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- جدول أحدث الطلبات -->
+                <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="20" Margin="0,0,15,0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Recent Applications" FontSize="16" FontWeight="Bold" Foreground="#0F172A" Margin="0,0,0,15"/>
+
+                        <DataGrid AutoGenerateColumns="False" 
+                                  IsReadOnly="True" 
+                                  HeadersVisibility="Column" 
+                                  GridLinesVisibility="Horizontal" 
+                                  HorizontalGridLinesBrush="#F1F5F9" 
+                                  ColumnHeaderStyle="{StaticResource ModernDataGridHeader}"
+                                  RowStyle="{StaticResource ModernDataGridRow}"
+                                  Background="Transparent" 
+                                  BorderThickness="0" 
+                                  RowHeight="38">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                                <DataGridTextColumn Header="Applicant" Binding="{Binding Applicant}" Width="*"/>
+                                <DataGridTextColumn Header="Service" Binding="{Binding Service}" Width="1.5*"/>
+                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="90"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+
+                <!-- أزرار الاختصارات السريعة -->
+                <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="20">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Quick Actions" FontSize="16" FontWeight="Bold" Foreground="#0F172A" Margin="0,0,0,15"/>
+                        <UniformGrid Columns="2">
+                            <Button x:Name="btnManagePeople" Content="+ People" Style="{StaticResource QuickActionButtonStyle}" Click="btnManagePeople_Click"/>
+                            <Button Content="+ Drivers" Style="{StaticResource QuickActionButtonStyle}" Click="btnDrivers_Click"/>
+                            <Button Content="+ Users" Style="{StaticResource QuickActionButtonStyle}" Click="btnUsers_Click"/>
+                            <Button Content="+ Licenses" Style="{StaticResource QuickActionButtonStyle}" Click="btnLocalLicense_Click"/>
+                            <Button Content="+ Test" Style="{StaticResource QuickActionButtonStyle}" Click="btnRetakeTest_Click"/>
+                            <Button Content="+ Reports" Style="{StaticResource QuickActionButtonStyle}"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- قسم النشاط الأخير والإحصائيات -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- قائمة أحدث الأنشطة -->
+                <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="20" Margin="0,0,10,0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Recent Activity" FontSize="16" FontWeight="Bold" Foreground="#0F172A" Margin="0,0,0,15"/>
+
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="• Ahmed K. added a new Person" FontSize="13" Foreground="#334155" FontWeight="SemiBold"/>
+                            <TextBlock Text="10 mins ago" FontSize="11" Foreground="#94A3B8"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="• Sara M. renewed Driving License" FontSize="13" Foreground="#334155" FontWeight="SemiBold"/>
+                            <TextBlock Text="25 mins ago" FontSize="11" Foreground="#94A3B8"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock Text="• Omar T. created User Account" FontSize="13" Foreground="#334155" FontWeight="SemiBold"/>
+                            <TextBlock Text="1 hour ago" FontSize="11" Foreground="#94A3B8"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="• Ali R. detained License #4092" FontSize="13" Foreground="#334155" FontWeight="SemiBold"/>
+                            <TextBlock Text="3 hours ago" FontSize="11" Foreground="#94A3B8"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- مؤشرات نسبة الإنجاز والإحصائيات -->
+                <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="20" Margin="10,0,0,0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.04"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Statistics Overview" FontSize="16" FontWeight="Bold" Foreground="#0F172A" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Applications Completion Rate (82%)" FontSize="12" Foreground="#64748B" Margin="0,0,0,4"/>
+                        <ProgressBar Value="82" Height="8" Foreground="#2563EB" Background="#F1F5F9" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Active Drivers Share (65%)" FontSize="12" Foreground="#64748B" Margin="0,0,0,4"/>
+                        <ProgressBar Value="65" Height="8" Foreground="#16A34A" Background="#F1F5F9" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Verified People Profiles (95%)" FontSize="12" Foreground="#64748B" Margin="0,0,0,4"/>
+                        <ProgressBar Value="95" Height="8" Foreground="#D97706" Background="#F1F5F9"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -393,6 +393,11 @@ namespace DVLD_BusinessLayer
             return false;
         }
 
+        public static int GetTodayUsersCount()
+        {
+            return ClsUserDataAccess.GetTodayUsersCount();
+        }
+
         public override string ToString()
         {
             return this.UserName;
