@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using BassemCore.Security; // مساحة الأسماء الخاصة بكلاس الـ RegistryHelper إن أردت استخدامها هنا أو تركها
 
 namespace DVLD_ClientTier
 {
@@ -9,6 +10,8 @@ namespace DVLD_ClientTier
     {
         // مرجع يحمل بيانات المستخدم الحالي الذي قام بتسجيل الدخول بنجاح ويستخدم في كافة أنحاء النظام
         public static ClsUser CurrentUser { get; set; }
+
+        #region الطريقة القديمة (الملفات النصية - كما هي تماماً بدون حذف)
 
         /// <summary>
         /// حفظ اسم المستخدم وكلمة المرور في ملف نصي محلي عند اختيار تذكرني
@@ -71,5 +74,50 @@ namespace DVLD_ClientTier
                 return false;
             }
         }
+
+        #endregion
+
+
+        #region الطريقة الجديدة (توجيه العمليات مباشرة إلى ClsCredentialsManager)
+
+        /// <summary>
+        /// حفظ اسم المستخدم وكلمة المرور في Windows Registry (عبر استدعاء ClsCredentialsManager)
+        /// </summary>
+        public static bool RememberUsernameAndPasswordInRegistry(string username, string password)
+        {
+            try
+            {
+                // إذا كان اسم المستخدم فارغاً (عند إلغاء تذكرني)، نقوم بحفظ قيم فارغة لتقوم الكلاس بحذفها أو تفريغها
+                if (string.IsNullOrEmpty(username))
+                {
+                    return ClsCredentialsManager.SaveStoredCredential(string.Empty, string.Empty);
+                }
+
+                // تمرير العمليات بالكامل إلى الكلاس المنفصل
+                return ClsCredentialsManager.SaveStoredCredential(username, password);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// قراءة بيانات الدخول المحفوظة مسبقاً من Windows Registry (عبر استدعاء ClsCredentialsManager)
+        /// </summary>
+        public static bool GetStoredCredentialFromRegistry(ref string username, ref string password)
+        {
+            try
+            {
+                // تفويض عملية القراءة وفك التشفير بالكامل إلى ClsCredentialsManager
+                return ClsCredentialsManager.GetStoredCredential(ref username, ref password);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 }

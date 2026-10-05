@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BassemCore.Security;
 
 namespace DVLD_BusinessLayer
 {

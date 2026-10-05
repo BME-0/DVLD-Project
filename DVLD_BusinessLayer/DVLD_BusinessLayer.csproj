@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DVLD_BusinessLayer</RootNamespace>
     <AssemblyName>DVLD_BusinessLayer</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BassemCore">
+      <HintPath>F:\BassemCore\bin\Debug\BassemCore.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,7 +47,6 @@
   <ItemGroup>
     <Compile Include="ClsApplicationType.cs" />
     <Compile Include="ClsCountry.cs" />
-    <Compile Include="ClsEncryption.cs" />
     <Compile Include="ClsLocalDrivingLicenseApplication.cs" />
     <Compile Include="ClsPerson.cs" />
     <Compile Include="ClsTestType.cs" />

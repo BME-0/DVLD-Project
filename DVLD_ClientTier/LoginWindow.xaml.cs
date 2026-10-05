@@ -38,7 +38,8 @@ namespace DVLD_ClientTier
             string username = string.Empty;
             string password = string.Empty;
 
-            if (ClsGlobal.GetStoredCredential(ref username, ref password))
+            // [تعديل هنا]: استبدلنا الدالة القديمة بالدالة الجديدة الخاصة بالريجستري
+            if (ClsGlobal.GetStoredCredentialFromRegistry(ref username, ref password))
             {
                 txtUsername.Text = username;
                 txtPassword.Password = password;
@@ -153,14 +154,14 @@ namespace DVLD_ClientTier
                 // حفظ المستخدم الحالي في الـ Global لتتمكن من استخدامه في باقي الشاشات
                 ClsGlobal.CurrentUser = user;
 
-                // معالجة خاصية تذكرني (حفظ أو مسح الملف)
+                // [تعديل هنا]: معالجة خاصية تذكرني باستخدام الريجستري (حفظ أو مسح البيانات)
                 if (rememberMe)
                 {
-                    ClsGlobal.RememberUsernameAndPassword(username, password);
+                    ClsGlobal.RememberUsernameAndPasswordInRegistry(username, password);
                 }
                 else
                 {
-                    ClsGlobal.RememberUsernameAndPassword(string.Empty, string.Empty);
+                    ClsGlobal.RememberUsernameAndPasswordInRegistry(string.Empty, string.Empty);
                 }
 
                 // الانتقال إلى الـ MainWindow وإغلاق نافذة تسجيل الدخول الحالية
@@ -177,5 +178,10 @@ namespace DVLD_ClientTier
         }
 
         #endregion
+
+        private void chkRememberMe_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

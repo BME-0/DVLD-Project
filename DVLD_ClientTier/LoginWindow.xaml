@@ -194,7 +194,7 @@
                           Content="Remember me"
                           Margin="0,20,0,25"
                           Foreground="#475569"
-                          FontSize="13"/>
+                          FontSize="13" Checked="chkRememberMe_Checked"/>
 
                 <!-- Login Button -->
                 <Button Content="LOGIN"

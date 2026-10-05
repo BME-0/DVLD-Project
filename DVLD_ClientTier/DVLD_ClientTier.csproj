@@ -65,6 +65,7 @@
     <Compile Include="ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ClsCredentialsManager.cs" />
     <Compile Include="ctrlDrivingLicenseApplicationInfo.xaml.cs">
       <DependentUpon>ctrlDrivingLicenseApplicationInfo.xaml</DependentUpon>
     </Compile>
